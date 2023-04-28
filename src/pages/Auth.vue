@@ -1,15 +1,20 @@
 <template>
   <div class="page">
     <div class="page__container">
-        <div class="page__auth">
-
-        </div>
+        <form @submit="fetchAuthorize" class="page__auth">
+          <button type="submit" class="btn page__submit"></button>
+        </form>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PageAuth"
+  name: "PageAuth",
+  methods: {
+    fetchAuthorize() {
+      
+    }
+  }
 }
 </script>
