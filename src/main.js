@@ -1,6 +1,5 @@
 import Vue from 'vue';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import VeeValidate from 'vee-validate';
 
 import router from './router';

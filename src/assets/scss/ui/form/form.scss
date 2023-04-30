@@ -1,0 +1,31 @@
+.form {
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: em(20);
+    margin-top: em(14);
+    margin-bottom: em(25);
+  }
+
+  &__input {
+    border: transparent;
+    border-radius: 5px;
+    background: $white;
+    height: em(41);
+    padding: 0 em(10);
+  }
+
+  &__submit {
+    width: 100%;
+    height: em(41);
+    border-radius: 5px;
+    background: $color-green;
+    border: transparent;
+  }
+
+  &__font {
+    &--error {
+      color: $red;
+    }
+  }
+}

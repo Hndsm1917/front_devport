@@ -1,0 +1,22 @@
+.layout {
+  &__content {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  &__header {
+    flex: 0 0 em(60);
+    background: $color-grey-0;
+  }
+
+  &__main {
+    flex: 1 1 auto;
+  }
+
+  &__footer {
+    flex: 0 0 em(150);
+    background: $color-grey-0;
+  }
+}

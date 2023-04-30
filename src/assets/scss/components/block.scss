@@ -1,0 +1,14 @@
+.block {
+  &__header {
+    background: $color-grey-3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: em(51);
+    border-radius: em(5) em(5) 0 0;
+  }
+
+  &__form {
+    padding: em(15) em(25) em(30);
+  }
+}

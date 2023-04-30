@@ -1,0 +1,10 @@
+.page {
+  &__auth {
+    display: flex;
+    flex-direction: column;
+    margin: em(60) auto 0;
+    width: em(447);
+    border-radius: em(5);
+    background: $color-grey-4;
+  }
+}
