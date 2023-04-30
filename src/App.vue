@@ -1,19 +1,18 @@
 <template>
   <div id="app">
     <Main class="app-layout">
-      <Auth/>
+      <router-view></router-view>
     </Main>
   </div>
 </template>
 
 <script>
-import Main from "@/layouts/MainLayout.vue";
-import Auth from "@/pages/Auth.vue";
+import Main from '@/layouts/MainLayout.vue';
+
 export default {
   name: 'App',
   components: {
     Main,
-    Auth
-  }
-}
+  },
+};
 </script>

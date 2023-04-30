@@ -10,11 +10,11 @@
 
 <script>
 export default {
-  name: "PageAuth",
+  name: 'PageAuth',
   methods: {
     fetchAuthorize() {
-      
-    }
-  }
-}
+
+    },
+  },
+};
 </script>

@@ -1,10 +1,21 @@
-const {defineConfig} = require('@vue/cli-service')
+module.exports = {
+  runtimeCompiler: true,
+  productionSourceMap: false,
+  outputDir: '../web',
+  css: {
+    sourceMap: process.env.NODE_ENV !== 'production',
+  },
+  chainWebpack: (config) => {
+    config.optimization.delete('splitChunks');
+    const svgRule = config.module.rule('svg');
 
-// import Vue from 'vue'
-// import Vuex from 'vuex'
+    svgRule.uses.clear();
 
-// Vue.use(Vuex)
-
-module.exports = defineConfig({
-  transpileDependencies: true
-})
+    svgRule
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+      .use('vue-svg-loader')
+      .loader('vue-svg-loader');
+  },
+};

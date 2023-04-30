@@ -1,8 +1,32 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
 
-Vue.config.productionTip = false
+// eslint-disable-next-line import/no-extraneous-dependencies
+import VeeValidate from 'vee-validate';
+
+import router from './router';
+
+import App from './App.vue';
+import '@/assets/scss/app.scss';
+
+import store from './store';
+
+Vue.config.productionTip = false;
+Vue.use(VeeValidate, {
+  locale: 'ru',
+});
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  router,
+  store,
+  render: (h) => h(App),
+  data() {
+    return {
+      isMobile: false,
+    };
+  },
+  created() {
+    this.$on('onChangeMobileStatus', (status) => {
+      this.isMobile = status;
+    });
+  },
+}).$mount('#app');

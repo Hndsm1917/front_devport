@@ -1,0 +1,18 @@
+@import "mixins";
+
+/* Example of connecting fonts
+*
+* Please, use https://transfonter.org/ with options "Family support" and "Fix vertical metrics"
+* Add format .eot, .ttf, .woff for cross-browser compatibility
+*
+* @include font-face("Montserrat", "../fonts/Montserrat/Montserrat-Regular", normal, normal);
+* @include font-face("Montserrat", "../fonts/Montserrat/Montserrat-Medium", 500, normal);
+* @include font-face("Montserrat", "../fonts/Montserrat/Montserrat-Bold", 700, normal);
+*
+*/
+
+@include font-face('Roboto', '/fonts/Roboto/Roboto-ThinItalic', normal, normal);
+@include font-face('Roboto', '/fonts/Roboto/Roboto-BlackItalic', bold, italic);
+@include font-face('Roboto', '/fonts/Roboto/Roboto-Bold', bold, normal);
+@include font-face('Roboto', '/fonts/Roboto/Roboto-Black', 900, normal);
+//@include font-face('MTSSans', '/fonts/MTSSans/MTSSans-Black', 900, normal);
