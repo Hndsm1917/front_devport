@@ -130,36 +130,20 @@ export default {
     },
 
     currentTodo() {
-      let result = [];
+      let result = this.localTodos;
 
-      switch (true) {
-        case this.currentFilter.status === 'Completed':
-          result = this.localTodos.filter((elem) => elem?.completed === true);
-          break;
-
-        case this.currentFilter.status === 'Uncompleted':
-          result = this.localTodos.filter((elem) => elem?.completed === false);
-          break;
-
-        case this.currentFilter.status === 'Favorites':
-          result = this.localTodos.filter((elem) => elem?.isFavorite === true);
-          break;
-
-        default:
-          result = this.localTodos;
+      if (this.currentFilter.status === 'Completed') {
+        result = result.filter((elem) => elem?.completed === true);
+      } else if (this.currentFilter.status === 'Uncompleted') {
+        result = result.filter((elem) => elem?.completed === false);
+      } else if (this.currentFilter.status === 'Favorites') {
+        result = result.filter((elem) => elem?.isFavorite === true);
       }
 
-      switch (true) {
-        case this.currentFilter.user === 'Current User':
-          result = result.filter((elem) => elem.userId === this.getCurrentUser.id);
-          break;
-
-        case typeof this.currentFilter.user === 'number':
-          result = result.filter((elem) => elem.userId === this.currentFilter.user);
-          break;
-
-        default:
-          result = this.localTodos;
+      if (this.currentFilter.user === 'Current User') {
+        result = result.filter((elem) => elem.userId === this.getCurrentUser.id);
+      } else if (typeof this.currentFilter.user === 'number') {
+        result = result.filter((elem) => elem.userId === this.currentFilter.user);
       }
 
       if (this.searchVal !== '') {
