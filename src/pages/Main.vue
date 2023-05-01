@@ -47,6 +47,13 @@
         />
       </div>
 
+      <input
+        placeholder="search val"
+        v-model="searchVal"
+        type="string"
+        class="form__input"
+      >
+
       <div v-if="currentTodo" class="page__todos">
         <Card
           class="page__todo-item"
@@ -74,6 +81,8 @@ export default {
   data() {
     return {
       localTodos: this.getTodos,
+
+      searchVal: '',
 
       formData: {
         id: '',
@@ -150,7 +159,11 @@ export default {
           break;
 
         default:
-          return result;
+          result = this.localTodos;
+      }
+
+      if (this.searchVal !== '') {
+        result = result.filter(({ title }) => title.toLowerCase().includes(this.searchVal));
       }
 
       return result;

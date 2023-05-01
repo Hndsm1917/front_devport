@@ -1,52 +1,42 @@
 <template>
   <div class="page">
     <div class="page__container">
-      <div class="page__auth block">
-        <div class="block__header">
-          <span class="block__font block__font--header">
-            description
-          </span>
-        </div>
+      <Block
+        header="add new task"
+        description="Add new user ID and task "
+        submitText="ADD"
+        class="page__auth page__block"
+        @formSubmit="fetchAuthorize"
+      >
+        <template #form>
+          <input
+            placeholder="username"
+            v-model="formData.username"
+            type="text"
+            class="form__input"
+          >
 
-        <form @submit="fetchAuthorize" class="block__form form">
-          <div class="form__description">
-            <span class="form__font form__font--description">
-              description
-            </span>
-          </div>
+          <input
+            placeholder="Phone Number"
+            v-model="formData.phone"
+            type="text"
+            class="form__input"
+          >
 
-          <div class="form__grid">
-            <input
-              placeholder="username"
-              v-model="formData.username"
-              type="text"
-              class="form__input"
-            >
-
-            <input
-              placeholder="Phone Number"
-              v-model="formData.phone"
-              type="text"
-              class="form__input"
-            >
-
-            <span class="form__font form__font--error" v-if="isInvalid">login error</span>
-          </div>
-
-          <button type="submit" class="btn form__submit">
-            Register
-          </button>
-        </form>
-      </div>
+          <span class="form__font form__font--error" v-if="isInvalid">login error</span>
+        </template>
+      </Block>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+import Block from '@/components/Block.vue';
 
 export default {
   name: 'PageAuth',
+  components: { Block },
 
   data() {
     return {
@@ -70,9 +60,7 @@ export default {
       setCurrentUser: 'users/setCurrentUser',
     }),
 
-    fetchAuthorize(e) {
-      e.preventDefault();
-
+    fetchAuthorize() {
       const hasDuplicate = this.users.filter((user) => user.username === this.formData.username
         && user.phone === this.formData.phone);
 
