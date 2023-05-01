@@ -41,7 +41,6 @@ export default {
   data() {
     return {
       isInvalid: false,
-
       formData: {
         username: '',
         phone: '',
@@ -57,7 +56,7 @@ export default {
 
   methods: {
     ...mapMutations({
-      setCurrentUser: 'users/setCurrentUser',
+      SET_CURRENT_USER: 'users/SET_CURRENT_USER',
     }),
 
     fetchAuthorize() {
@@ -78,7 +77,7 @@ export default {
       this.users.forEach((user) => {
         if (user.username === this.formData.username) {
           localStorage.setItem('userName', this.formData.username);
-          this.setCurrentUser(user);
+          this.SET_CURRENT_USER(user);
         }
       });
 

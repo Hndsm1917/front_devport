@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="card"
-    :class="[
-      {'card--completed': item.completed},
-      {'card--favorite': item.isFavorite}
-    ]"
-  >
+  <div :class="cardClasses">
     <div class="card__title">
       {{ item.title }}
     </div>
@@ -24,6 +18,16 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+  },
+
+  computed: {
+    cardClasses() {
+      return {
+        card: true,
+        'card--completed': this.item.completed,
+        'card--favorite': this.item.isFavorite,
+      };
     },
   },
 

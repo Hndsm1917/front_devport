@@ -20,7 +20,7 @@ export default {
   name: 'MainLayout',
 
   mounted() {
-    this.fetchUsers().then((res) => {
+    this.fetchUsers().then(() => {
       this.checkUserStatus();
     });
   },
@@ -37,7 +37,7 @@ export default {
     }),
 
     ...mapMutations({
-      setCurrentUser: 'users/setCurrentUser',
+      SET_CURRENT_USER: 'users/SET_CURRENT_USER',
     }),
 
     checkUserStatus() {
@@ -48,7 +48,7 @@ export default {
       } else {
         this.users.forEach((user) => {
           if (user.username === storageData) {
-            this.setCurrentUser(user);
+            this.SET_CURRENT_USER(user);
 
             if (this.$route.path === '/') {
               this.$router.push('main');

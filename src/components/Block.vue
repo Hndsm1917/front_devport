@@ -8,7 +8,7 @@
       </span>
     </div>
 
-    <form @submit="onSubmit" class="block__form form">
+    <form @submit.prevent="onSubmit" class="block__form form">
       <div class="form__description">
         <span class="form__font form__font--description">
           <slot name="description">
@@ -33,24 +33,15 @@
 <script>
 export default {
   name: 'Block',
+
   props: {
-    header: {
-      type: String,
-      required: false,
-    },
-    description: {
-      type: String,
-      required: false,
-    },
-    submitText: {
-      type: String,
-      required: false,
-    },
+    header: String,
+    description: String,
+    submitText: String,
   },
 
   methods: {
-    onSubmit(e) {
-      e.preventDefault();
+    onSubmit() {
       this.$emit('formSubmit');
     },
   },

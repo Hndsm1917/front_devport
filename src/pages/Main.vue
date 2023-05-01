@@ -50,7 +50,7 @@
       <input
         placeholder="search val"
         v-model="searchVal"
-        type="string"
+        type="text"
         class="form__input"
       >
 
@@ -72,7 +72,6 @@ import { mapActions, mapGetters } from 'vuex';
 import Card from '@/components/Card.vue';
 import Dropdown from '@/components/Dropdown.vue';
 import Block from '@/components/Block.vue';
-import { rewriteValInObj } from '@/helpers/objectsHandlers';
 
 export default {
   name: 'Main',
@@ -179,38 +178,31 @@ export default {
     },
 
     cardToFavorite(id) {
+      let storageArrData = [];
       const storageArr = localStorage.getItem('cardArr');
 
-      if (storageArr) {
-        const storageArrData = JSON.parse(storageArr);
+      if (storageArr) storageArrData = JSON.parse(storageArr);
 
-        if (!storageArrData.includes(id)) {
-          localStorage.setItem('cardArr', JSON.stringify([...storageArrData, id]));
-          // rewriteValInObj('isFavorite', true, 'id');
+      if (!storageArrData.includes(id)) {
+        storageArrData.push(id);
+        localStorage.setItem('cardArr', JSON.stringify(storageArrData));
 
-          this.localTodos = this.localTodos.map((_obj) => {
-            const obj = { ..._obj };
-            if (_obj.id === id) {
-              obj.isFavorite = true;
-            }
-
-            return obj;
-          });
-        } else {
-          const newData = storageArrData.filter((val) => val !== id);
-          localStorage.setItem('cardArr', JSON.stringify(newData));
-
-          this.localTodos = this.localTodos.map((_obj) => {
-            const obj = { ..._obj };
-            if (_obj.id === id) {
-              obj.isFavorite = false;
-            }
-
-            return obj;
-          });
-        }
+        this.localTodos = this.localTodos.map((obj) => {
+          if (obj.id === id) {
+            return { ...obj, isFavorite: true };
+          }
+          return obj;
+        });
       } else {
-        localStorage.setItem('cardArr', JSON.stringify([id]));
+        storageArrData = storageArrData.filter((val) => val !== id);
+        localStorage.setItem('cardArr', JSON.stringify(storageArrData));
+
+        this.localTodos = this.localTodos.map((obj) => {
+          if (obj.id === id) {
+            return { ...obj, isFavorite: false };
+          }
+          return obj;
+        });
       }
     },
   },

@@ -5,10 +5,10 @@ import { getRequest } from '@/helpers/http';
 export const users = {
   namespaced: true,
 
-  state: () => ({
+  state: {
     users: [],
     currentUser: null,
-  }),
+  },
 
   getters: {
     getUsers: (state) => state.users,
@@ -18,18 +18,18 @@ export const users = {
   },
 
   mutations: {
-    setUsers(state, res) {
+    SET_USERS(state, res) {
       state.users = res;
     },
 
-    setCurrentUser(state, res) {
+    SET_CURRENT_USER(state, res) {
       state.currentUser = res;
     },
   },
 
   actions: {
     async fetchUsers({ commit }) {
-      commit('setUsers', await getRequest('https://jsonplaceholder.typicode.com/users'));
+      commit('SET_USERS', await getRequest('https://jsonplaceholder.typicode.com/users'));
     },
   },
 };
