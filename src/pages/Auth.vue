@@ -67,14 +67,14 @@ export default {
 
   methods: {
     ...mapMutations({
-      setUserStatus: 'users/setUserStatus',
+      setCurrentUser: 'users/setCurrentUser',
     }),
 
     fetchAuthorize(e) {
       e.preventDefault();
 
       const hasDuplicate = this.users.filter((user) => user.username === this.formData.username
-            && user.phone === this.formData.phone);
+        && user.phone === this.formData.phone);
 
       if (hasDuplicate.length > 0) {
         this.gotoNextRoute();
@@ -87,8 +87,14 @@ export default {
     },
 
     gotoNextRoute() {
-      localStorage.setItem('userName', this.formData.username);
-      this.setUserStatus(true);
+      this.users.forEach((user) => {
+        if (user.username === this.formData.username) {
+          localStorage.setItem('userName', this.formData.username);
+          this.setCurrentUser(user);
+        }
+      });
+
+      this.$router.push('/main');
     },
   },
 };

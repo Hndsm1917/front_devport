@@ -1,0 +1,25 @@
+.card {
+  $self: &;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 em(20);
+  position: relative;
+
+  &--completed {
+    #{$self}__title {
+      color: $color-green;
+    }
+  }
+
+  &__title {
+    font-size: em(20);
+    line-height: em(1);
+  }
+
+  &__favorite {
+    position: absolute;
+    right: 0;
+  }
+}

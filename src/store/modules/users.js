@@ -1,17 +1,20 @@
+import { recursiveObjFields } from '@/helpers/objectsHandlers';
+import { getRequest } from '@/helpers/http';
+
 // eslint-disable-next-line import/prefer-default-export
 export const users = {
   namespaced: true,
 
   state: () => ({
     users: [],
-
-    isUserAuthorize: false,
+    currentUser: null,
   }),
 
   getters: {
     getUsers: (state) => state.users,
-
-    getUserStatus: (state) => state.isUserAuthorize,
+    getCurrentUser: (state) => state.currentUser,
+    getAllUsersId: (state) => state.users.map((user) => user.id),
+    getCurrentUserFields: (state) => (state.currentUser === null ? '' : recursiveObjFields(state.currentUser)),
   },
 
   mutations: {
@@ -19,22 +22,14 @@ export const users = {
       state.users = res;
     },
 
-    setUserStatus(state, bool) {
-      state.isUserAuthorize = bool;
+    setCurrentUser(state, res) {
+      state.currentUser = res;
     },
   },
 
   actions: {
     async fetchUsers({ commit }) {
-      const res = await fetch('https://jsonplaceholder.typicode.com/users', {
-        method: 'GET',
-        cache: 'default',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      commit('setUsers', await res.json());
+      commit('setUsers', await getRequest('https://jsonplaceholder.typicode.com/users'));
     },
   },
 };

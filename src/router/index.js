@@ -12,14 +12,14 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: "Home" */ '@/pages/Auth.vue'),
   },
-  // {
-  //   path: '/',
-  //   name: 'karta',
-  //   meta: {
-  //     type: 'karta',
-  //   },
-  //   component: () => import(/*nvm  webpackChunkName: "Map" */ '../views/Map.vue'),
-  // },
+  {
+    path: '/main',
+    name: 'main',
+    meta: {
+      type: 'main',
+    },
+    component: () => import(/* nvm  webpackChunkName: "Map" */ '@/pages/Main.vue'),
+  },
 ];
 
 const router = new VueRouter({

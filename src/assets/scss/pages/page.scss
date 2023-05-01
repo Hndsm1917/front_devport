@@ -7,4 +7,37 @@
     border-radius: em(5);
     background: $color-grey-4;
   }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    max-width: em(1000);
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__user-data {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: em(20);
+    margin-top: em(40);
+    border: 1px solid $white;
+  }
+
+  &__todos {
+    margin-top: em(50);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__todo-item {
+    border-bottom: 1px solid $color-grey-3;
+    height: em(50);
+    margin-bottom: em(10);
+  }
 }

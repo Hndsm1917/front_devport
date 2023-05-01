@@ -7,9 +7,7 @@
         <slot></slot>
       </main>
 
-      <div class="layout__footer">
-
-      </div>
+      <div class="layout__footer"></div>
     </div>
 
   </div>
@@ -23,7 +21,6 @@ export default {
 
   mounted() {
     this.fetchUsers().then((res) => {
-      console.log(res);
       this.checkUserStatus();
     });
   },
@@ -40,7 +37,7 @@ export default {
     }),
 
     ...mapMutations({
-      setUserStatus: 'users/setUserStatus',
+      setCurrentUser: 'users/setCurrentUser',
     }),
 
     checkUserStatus() {
@@ -50,8 +47,12 @@ export default {
         localStorage.setItem('userName', '');
       } else {
         this.users.forEach((user) => {
-          if (user === storageData) {
-            this.setUserStatus(true);
+          if (user.username === storageData) {
+            this.setCurrentUser(user);
+
+            if (this.$route.path === '/') {
+              this.$router.push('main');
+            }
           }
         });
       }
