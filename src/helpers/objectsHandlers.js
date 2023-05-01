@@ -12,6 +12,14 @@ export function recursiveObjFields(obj) {
   return arr;
 }
 
-export function placeholder() {
+export function rewriteValInObj(field, val, compareField, compareVal) {
+  return arr.map((_obj) => {
+    const obj = { ..._obj };
+    if (_obj[compareVal] === compareVal) {
+      obj[field] = val;
+      console.log(obj);
+    }
 
+    return obj;
+  });
 }

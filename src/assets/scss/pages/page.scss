@@ -1,5 +1,5 @@
 .page {
-  &__auth {
+  &__block {
     display: flex;
     flex-direction: column;
     margin: em(60) auto 0;
@@ -14,6 +14,15 @@
     max-width: em(1000);
     width: 100%;
     margin: 0 auto;
+  }
+
+  &__add-todo {
+    display: flex;
+    flex-direction: column;
+    margin: em(60) auto 0;
+    width: em(447);
+    border-radius: em(5);
+    background: $color-grey-4;
   }
 
   &__user-data {

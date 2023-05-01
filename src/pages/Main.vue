@@ -7,9 +7,29 @@
         </span>
       </div>
 
-      <div class="page__add-todo">
+      <Block
+        header="add new task"
+        description="Add new user ID and task "
+        submitText="ADD"
+        class="page__block"
+        @formSubmit="addNewTask"
+      >
+        <template #form>
+          <input
+            placeholder="title"
+            v-model="formData.title"
+            type="text"
+            class="form__input"
+          >
 
-      </div>
+          <input
+            placeholder="id"
+            v-model="formData.id"
+            type="number"
+            class="form__input"
+          >
+        </template>
+      </Block>
 
       <div class="page__filters">
         <Dropdown
@@ -44,14 +64,21 @@
 import { mapActions, mapGetters } from 'vuex';
 import Card from '@/components/Card.vue';
 import Dropdown from '@/components/Dropdown.vue';
+import Block from '@/components/Block.vue';
+import { rewriteValInObj } from '@/helpers/objectsHandlers';
 
 export default {
   name: 'Main',
-  components: { Dropdown, Card },
+  components: { Block, Dropdown, Card },
 
   data() {
     return {
       localTodos: this.getTodos,
+
+      formData: {
+        id: '',
+        title: '',
+      },
 
       currentFilter: {
         status: 'All',
@@ -68,14 +95,14 @@ export default {
       getAllUsersId: 'users/getAllUsersId',
     }),
 
-    // todos: {
-    //   get() {
-    //     return this.getTodos;
-    //   },
-    //   set(value) {
-    //     this.localTodos = value;
-    //   },
-    // },
+    todos: {
+      get() {
+        return this.getTodos;
+      },
+      set(value) {
+        this.localTodos = value;
+      },
+    },
 
     options() {
       return {
@@ -94,47 +121,47 @@ export default {
     },
 
     currentTodo() {
-      let statusArr = [];
+      let result = [];
 
       switch (true) {
         case this.currentFilter.status === 'Completed':
-          statusArr = this.getTodos.filter((elem) => elem?.completed === true);
+          result = this.localTodos.filter((elem) => elem?.completed === true);
           break;
 
         case this.currentFilter.status === 'Uncompleted':
-          statusArr = this.getTodos.filter((elem) => elem?.completed === false);
+          result = this.localTodos.filter((elem) => elem?.completed === false);
           break;
 
         case this.currentFilter.status === 'Favorites':
-          statusArr = this.getTodos.filter((elem) => elem?.isFavorite === true);
+          result = this.localTodos.filter((elem) => elem?.isFavorite === true);
           break;
 
         default:
-          statusArr = this.getTodos;
+          result = this.localTodos;
       }
 
       switch (true) {
         case this.currentFilter.user === 'Current User':
-          statusArr = statusArr.filter((elem) => elem.userId === this.getCurrentUser.id);
+          result = result.filter((elem) => elem.userId === this.getCurrentUser.id);
           break;
 
         case typeof this.currentFilter.user === 'number':
-          statusArr = statusArr.filter((elem) => elem.userId === this.currentFilter.user);
+          result = result.filter((elem) => elem.userId === this.currentFilter.user);
           break;
 
         default:
-          return statusArr;
+          return result;
       }
 
-      return statusArr;
+      return result;
     },
   },
-  //
-  // watch: {
-  //   getTodos(val) {
-  //     this.todos = val;
-  //   },
-  // },
+
+  watch: {
+    getTodos(val) {
+      this.todos = val;
+    },
+  },
 
   mounted() {
     this.fetchTodos();
@@ -145,16 +172,49 @@ export default {
       fetchTodos: 'todos/fetchTodos',
     }),
 
-    cardToFavorite(id) {
-      // const storedDataAsString = localStorage.getItem('favoriteTodos');
-      // if (storedDataAsString === null) {
-      //   localStorage.setItem('favoriteTodos', '');
-      // }
-      // const storedData = JSON.parse(storedDataAsString);
-      // console.log(storedData);
-      // const dataAsString = JSON.stringify(id);
+    addNewTask() {
+      this.localTodos.unshift({
+        userId: this.formData.id,
+        title: this.formData.title,
+        completed: false,
+        id: this.localTodos.length + 1,
+      });
+    },
 
-      // localStorage.setItem('todoId', dataAsString);
+    cardToFavorite(id) {
+      const storageArr = localStorage.getItem('cardArr');
+
+      if (storageArr) {
+        const storageArrData = JSON.parse(storageArr);
+
+        if (!storageArrData.includes(id)) {
+          localStorage.setItem('cardArr', JSON.stringify([...storageArrData, id]));
+          // rewriteValInObj('isFavorite', true, 'id');
+
+          this.localTodos = this.localTodos.map((_obj) => {
+            const obj = { ..._obj };
+            if (_obj.id === id) {
+              obj.isFavorite = true;
+            }
+
+            return obj;
+          });
+        } else {
+          const newData = storageArrData.filter((val) => val !== id);
+          localStorage.setItem('cardArr', JSON.stringify(newData));
+
+          this.localTodos = this.localTodos.map((_obj) => {
+            const obj = { ..._obj };
+            if (_obj.id === id) {
+              obj.isFavorite = false;
+            }
+
+            return obj;
+          });
+        }
+      } else {
+        localStorage.setItem('cardArr', JSON.stringify([id]));
+      }
     },
   },
 

@@ -9,8 +9,12 @@
 
   &--completed {
     #{$self}__title {
-      color: $color-green;
+      color: $color-gold;
     }
+  }
+
+  &--favorite {
+    background: $color-green;
   }
 
   &__title {
@@ -21,5 +25,7 @@
   &__favorite {
     position: absolute;
     right: 0;
+    height: 100%;
+    background: white;
   }
 }

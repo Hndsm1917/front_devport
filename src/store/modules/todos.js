@@ -1,7 +1,9 @@
 import { getRequest } from '@/helpers/http';
 
-// const storedDataAsString = localStorage.getItem('favoriteTodos');
-// const storedData = JSON.parse(storedDataAsString);
+const storageArr = localStorage.getItem('cardArr');
+let storageArrData = '';
+
+if (storageArr) storageArrData = JSON.parse(storageArr);
 
 // eslint-disable-next-line import/prefer-default-export
 export const todos = {
@@ -14,7 +16,7 @@ export const todos = {
   getters: {
     getTodos: (state) => state.todos.map((item) => ({
       ...item,
-      isFavorite: false,
+      isFavorite: storageArrData.includes(item.id),
     })),
   },
 
